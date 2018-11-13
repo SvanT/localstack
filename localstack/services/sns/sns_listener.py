@@ -142,6 +142,12 @@ def do_subscribe(topic_arn, endpoint, protocol, subscription_arn):
         'SubscriptionArn': subscription_arn,
         'RawMessageDelivery': 'false'
     }
+
+    for existing_subscription in SNS_SUBSCRIPTIONS[topic_arn]:
+        if (subscription['Endpoint'] == existing_subscription['Endpoint']
+                and subscription['Protocol'] == existing_subscription['Protocol']):
+            return
+
     SNS_SUBSCRIPTIONS[topic_arn].append(subscription)
 
 
